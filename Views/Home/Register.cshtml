@@ -1,0 +1,32 @@
+<div>
+    <form id="userForm" asp-action="Create" asp-controller="User">
+        <input type="text" name="UserName" placeholder="Username" /><br>
+
+        <input type="email" name="Email" placeholder="Email" /><br>
+
+        <input type="password" name="Password" placeholder="Password" /><br>
+
+        <button type="submit">Create User</button>
+    </form>
+
+    <div id="result"></div>
+</div><script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $("#userForm").on("submit", function (e) {
+        e.preventDefault(); // stop normal form submit
+
+        $.ajax({
+            url: $(this).attr("action"),       // /User/Create
+            type: "POST",
+            data: $(this).serialize(),         // form fields → model
+            success: function (response) {
+                $("#result").html("<p style='color:green;'>User created successfully!</p>");
+                console.log(response);
+            },
+            error: function (xhr) {
+                $("#result").html("<p style='color:red;'>Error: " + xhr.responseText + "</p>");
+            }
+        });
+    });
+</script>
